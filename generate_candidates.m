@@ -1,0 +1,11 @@
+Attach("X1_N_equations.m");
+Attach("low_degree_places.m");
+import "X1_N_equations.m" : equations;
+Attach("assorted_functions.m");
+import "assorted_functions.m" : Main2;
+if assigned N then;
+    N_int:=StringToInteger(N);
+    cusp_sigs,candidates :=  Main2(N_int);
+    PrintFile("data/cusp_signatures_" cat N, cusp_sigs : Overwrite:=true);
+    PrintFile("data/candidates_" cat N, candidates : Overwrite:=true);
+end if;

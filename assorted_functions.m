@@ -1,3 +1,6 @@
+Attach("X1_N_equations.m");
+import "X1_N_equations.m": equations, gonality_upperbound;
+
 function DivisorSumsOfDegreeType(degree_type,divisors_by_degree)
     divisors := &cat divisors_by_degree;
     ZZdiv := FreeAbelianGroup(#divisors);
@@ -185,4 +188,51 @@ function FilterCandidates(curve,cusp_signatures,candidates)
         end if;
     end for;
     return survivors;
+end function;
+
+function Main2(N);
+    p:=2;
+    for i in PrimesInInterval(2,20) do;
+        if (N mod i) ne 0 then;
+            p:=i;
+            break;
+        end if;
+    end for;
+    X1modp := X_1(N,GF(p));
+    gon := gonality_upperbound[N];
+    Grp,m1,m2 := ClassGroup(X1modp);
+    cusps := Cusps_X1(X1modp);
+    cusp_orbits := Cusp_GalQ_orbits(X1modp,cusps);
+    cusp_signatures := [Cusp_GalQ_orbit_to_signature(cusp) : cusp in cusp_orbits];
+    non_cusps_by_degree := [NonCuspidalPlaces(d,cusp_orbits,X1modp) : d in [1..gon-1]];
+    non_cusps := &cat non_cusps_by_degree;
+    //print "non_cusps", #non_cusps;
+    if #non_cusps eq 0 then;
+        return cusp_signatures,[[] : degree in [1..gon-1]];
+    end if;
+    non_cusp_degrees := [Degree(P) : P in non_cusps];
+    
+    modular_units,CuspGrp,f := ClassSubgroup(cusp_orbits,Grp,m1,m2);
+    //non_cusp_functions,NonCuspGrp,f2 := ClassSubgroup(non_cusps,Grp,m1,m2);
+    M := FreeAbelianGroup( #non_cusps );
+    f2 := hom< M -> Grp | [m2(i) : i in non_cusps] >;
+    
+    ZZnoncusps := Domain(f2);
+    candidates := [];
+    for degree in [1..gon-1] do;
+        Append(~candidates,[]);
+        degree_types := RestrictedPartitions(degree,SequenceToSet(non_cusp_degrees));
+        for degree_type in degree_types do;
+            for D in DivisorSumsOfDegreeType(degree_type,non_cusps_by_degree) do;
+                if f2(D) in CuspGrp then;
+                    fInvD:=Vector(Eltseq((f^(-1))(f2(D))));
+                    v:=ClosestVectors(modular_units,Vector(fInvD) : Max:=1)[1];
+                    fInvD:=Eltseq(fInvD-v); //now fInvD should be shorter, making compuations faster
+                    Append(~candidates[degree],fInvD);
+                end if;
+            end for;
+        end for;
+    end for;
+    
+    return cusp_signatures,candidates;
 end function;
