@@ -190,7 +190,7 @@ function FilterCandidates(curve,cusp_signatures,candidates)
     return survivors;
 end function;
 
-function Main2(N);
+function Main2(N : d:=0, write_results_to_file := false);
     p:=2;
     for i in PrimesInInterval(2,20) do;
         if (N mod i) ne 0 then;
@@ -199,11 +199,18 @@ function Main2(N);
         end if;
     end for;
     X1modp := X_1(N,GF(p));
-    gon := gonality_upperbound[N];
+    if d eq 0 then;
+        gon := gonality_upperbound[N];
+    else;
+        gon := d;
+    end if;
     Grp,m1,m2 := ClassGroup(X1modp);
     cusps := Cusps_X1(X1modp);
     cusp_orbits := Cusp_GalQ_orbits(X1modp,cusps);
     cusp_signatures := [Cusp_GalQ_orbit_to_signature(cusp) : cusp in cusp_orbits];
+    if write_results_to_file then;
+        PrintFile("data/cusp_signatures_" cat IntegerToString(N), cusp_signatures : Overwrite:=true);
+    end if;
     non_cusps_by_degree := [NonCuspidalPlaces(d,cusp_orbits,X1modp) : d in [1..gon-1]];
     non_cusps := &cat non_cusps_by_degree;
     //print "non_cusps", #non_cusps;
@@ -232,6 +239,9 @@ function Main2(N);
                 end if;
             end for;
         end for;
+	if write_results_to_file then;
+            PrintFile("data/candidates_" cat IntegerToString(N) cat "_" cat IntegerToString(degree), candidates[degree] : Overwrite:=true);
+        end if;
     end for;
     
     return cusp_signatures,candidates;
