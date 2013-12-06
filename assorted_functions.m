@@ -1,6 +1,27 @@
 Attach("X1_N_equations.m");
 import "X1_N_equations.m": equations, gonality_upperbound;
 
+
+function FunctionDegrees(divisor)
+//{On input a divisor returns a list containing the degrees of all the non constant 
+//functions in the RiemannRochspace of the divisor
+//}
+    constantField := BaseRing(Curve(divisor));
+    space,map := RiemannRochSpace(divisor);
+    return [Degree(map(i)) : i in space | map(i) notin constantField];
+end function;
+
+function SmallestCoprimePrime(N);
+//{Returns the smallest prime that is coprime to the input integer.}
+    for i in [1..N] do;
+        p := NthPrime(i);
+        if not N mod p eq 0 then;
+            return p;
+        end if;
+    end for;
+end function;
+
+
 function DivisorSumsOfDegreeType(degree_type,divisors_by_degree)
     divisors := &cat divisors_by_degree;
     ZZdiv := FreeAbelianGroup(#divisors);
