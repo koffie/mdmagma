@@ -6,7 +6,7 @@ import "assorted_functions.m" : Main2;
 if assigned N then;
     N_int:=StringToInteger(N);
     if assigned d then;
-        d_int := StringToInteger(N);
+        d_int := StringToInteger(d);
         cusp_sigs,candidates :=  Main2(N_int : d:=d_int, write_results_to_file := true);
     else;
         cusp_sigs,candidates :=  Main2(N_int : write_results_to_file := true);
