@@ -68,7 +68,9 @@ function PostiveRankNewFactors(m,n);
   return pr_new_factors;
 end function;
 
-
+function IsX1mnRankZero(m,n);
+  return #PostiveRankNewFactors(m,n) eq 0;
+end function;
 
 
 
