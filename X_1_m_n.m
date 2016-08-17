@@ -10,7 +10,12 @@ function X_1_m_n(m,n,base_ring : equation_directory:="models_X1_m_n", zeta_m:=0)
         if zeta_m ne 0 then
             assert zeta_m^m eq 1 and &and[zeta_m^e ne 1: e in Divisors(m)| e ne m];
         else
-            zeta_m := RootOfUnity(m,base_ring);
+            try
+                zeta_m := RootOfUnity(m,base_ring);
+            catch e
+                printf "Specified base ring %o does not contain a %oth root of unity", base_ring, m;
+                assert false;
+            end try;
         end if;
         z:=zeta_m; i:=zeta_m;
     end if;
@@ -31,6 +36,8 @@ function X_1_m_n(m,n,base_ring : equation_directory:="models_X1_m_n", zeta_m:=0)
         val := Split(Split(line,"=")[2],";")[1];
         if line[1] eq "X" then X := eval(val); end if;
         if line[1] eq "q" then q := eval(val); end if;
+        if line[1] eq "r" then r := eval(val); end if;
+        if line[1] eq "s" then s := eval(val); end if;
         if line[1] eq "t" then t := eval(val); end if;
         if line[1] eq "E" then E := eval(val); end if;
         if line[1] eq "P" then P := eval(val); end if;
