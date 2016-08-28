@@ -1,9 +1,9 @@
 mdmagma
 =======
 
-Magma code as written by Maarten Derickx
+Magma code for computing with modular curves.
 
-    copyright (C) 2013 Maarten Derickx
+    copyright (C) 2016 Maarten Derickx, Andrew Sutherland
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
