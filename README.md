@@ -1,7 +1,7 @@
 mdmagma
 =======
 
-Magma code for computing with modular curves.
+Magma code for computing with modular curves and computations related to the paper [Torsion subgroups of elliptic curves over quintic and sextic number fields](http://arxiv.org/abs/1608.07549), by Maarten Derickx and Andrew V. Sutherland
 
     copyright (C) 2016 Maarten Derickx, Andrew Sutherland
     This program is free software: you can redistribute it and/or modify
