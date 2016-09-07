@@ -1,9 +1,9 @@
 mdmagma
 =======
 
-Magma code related to the paper [Torsion subgroups of elliptic curves over quintic and sextic number fields](http://arxiv.org/abs/1608.07549), by Maarten Derickx and Andrew V. Sutherland
+Magma code for computing with modular curves.
 
-    Copyright (C) 2013-2016 Maarten Derickx and Andrew V. Sutherland
+    copyright (C) 2016 Maarten Derickx, Andrew Sutherland
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
