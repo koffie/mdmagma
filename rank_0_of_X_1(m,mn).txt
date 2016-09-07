@@ -1,0 +1,66 @@
+derickx@babbage:~/mdmagma$ magma
+Magma V2.21-11    Fri Aug 19 2016 16:23:09 on babbage  [Seed = 2355933278]
+
++-------------------------------------------------------------------+
+|       This copy of Magma has been made available through a        |
+|                   generous initiative of the                      |
+|                                                                   |
+|                         Simons Foundation                         |
+|                                                                   |
+| covering U.S. Colleges, Universities, Nonprofit Research entities,|
+|               and their students, faculty, and staff              |
++-------------------------------------------------------------------+
+
+Type ? for help.  Type <Ctrl>-D to quit.
+> load "rank_zero_of_X1mn.m";
+Loading "rank_zero_of_X1mn.m"
+> ms := [2,3,4,6];
+> for m in ms do;
+for>   for n in [1..37] do;
+for|for>     x :=PostiveRankNewFactors(m,n);
+for|for>     if #x gt 0 then;
+for|for|if>       print m,n;
+for|for|if>       print x;
+for|for|if>       break;
+for|for|if>     end if;
+for|for>   end for;
+for> end for;
+2 22
+[   
+    Modular symbols space for Gamma_0(88) of weight 2 and dimension 1 over
+    Cyclotomic Field of order 10 and degree 4
+]
+3 11
+[   
+    Modular symbols space for Gamma_0(99) of weight 2 and dimension 1 over
+    Cyclotomic Field of order 10 and degree 4,
+    Modular symbols space for Gamma_0(99) of weight 2 and dimension 1 over
+    Cyclotomic Field of order 10 and degree 4
+]
+4 7
+[   
+    Modular symbols space for Gamma_0(112) of weight 2 and dimension 1 over
+    Cyclotomic Field of order 6 and degree 2,
+    Modular symbols space for Gamma_0(56) of weight 2 and dimension 1 over
+    Cyclotomic Field of order 6 and degree 2
+]
+6 6
+[   
+    Modular symbols space for Gamma_0(216) of weight 2 and dimension 1 over
+    Cyclotomic Field of order 6 and degree 2,
+    Modular symbols space for Gamma_0(216) of weight 2 and dimension 1 over
+    Cyclotomic Field of order 6 and degree 2
+]
+> %P
+load "rank_zero_of_X1mn.m";
+ms := [2,3,4,6];
+for m in ms do;
+  for n in [1..37] do;
+    x :=PostiveRankNewFactors(m,n);
+    if #x gt 0 then;
+      print m,n;
+      print x;
+      break;
+    end if;
+  end for;
+end for;
