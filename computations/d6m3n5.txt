@@ -1,0 +1,38 @@
+derickx@babbage:~/mdmagma$ magma
+Magma V2.21-11    Wed Aug 17 2016 17:34:57 on babbage  [Seed = 98995150]
+
++-------------------------------------------------------------------+
+|       This copy of Magma has been made available through a        |
+|                   generous initiative of the                      |
+|                                                                   |
+|                         Simons Foundation                         |
+|                                                                   |
+| covering U.S. Colleges, Universities, Nonprofit Research entities,|
+|               and their students, faculty, and staff              |
++-------------------------------------------------------------------+
+
+Type ? for help.  Type <Ctrl>-D to quit.
+> load "assorted_functions.m";
+Loading "assorted_functions.m"
+> load "gonality.m";
+Loading "gonality.m"
+> load "X_1_m_n.m";
+Loading "X_1_m_n.m"
+> 
+> print "Proving that the GF(4) gonality of X_1(3,15) is greater than 3";
+Proving that the GF(4) gonality of X_1(3,15) is greater than 3
+> C := X_1_m_n(3,15,GF(4));
+> time tf,g:=Gonality_lowerbound(C,4 : verbose := true);print tf,g;
+Checking divisors of degree: 1
+Checking divisors of degree: 2
+Checking divisors of degree: 3
+Time: 14.190
+true 4
+> %P
+load "assorted_functions.m";
+load "gonality.m";
+load "X_1_m_n.m";
+print "Proving that the GF(4) gonality of X_1(3,15) is greater than 3";
+C := X_1_m_n(3,15,GF(4));
+time tf,g:=Gonality_lowerbound(C,4 : verbose := true);print tf,g;
+> 

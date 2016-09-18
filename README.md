@@ -1,7 +1,12 @@
 mdmagma
 =======
 
-Magma code for computing with modular curves.
+Magma code for computing with modular curves by Maarten Derickx and Andrew V. Sutherland.
+The code in this project has been used for the following research papers:
+
+[Gonality of the modular curve X<sub>1</sub>(N)](https://arxiv.org/abs/1307.5719)
+
+[Torsion subgroups of elliptic curves over quintic and sextic number fields](http://arxiv.org/abs/1608.07549)
 
     copyright (C) 2016 Maarten Derickx, Andrew Sutherland
     This program is free software: you can redistribute it and/or modify
