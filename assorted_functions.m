@@ -77,6 +77,17 @@ function Cusps_X1(curve)
     return SequenceToSet(Support(Divisor(F2)) cat Support(Divisor(F3)) cat Support(Divisor(x)) cat Support(Divisor(x)));
 end function;
 
+function IsCusp(P);
+//Given a point on X_1(N) returns wether this point is a cusp
+    X1N := Curve(P);
+    x,y,r,s,b,c,F2,F3:=Functions_xyrsbcF2F3(X1N);
+    if Valuation(b,P) lt 0 or Valuation(c,P) lt 0 then;
+      return true;
+    end if;
+    bP:=Evaluate(b,P);
+    cP:=Evaluate(c,P);
+    return bP^3 * (cP^4 - 8*bP*cP^2 - 3*cP^3 + 16*bP^2 - 20*bP*cP + 3*cP^2 + bP - cP) eq 0;
+end function;
 
 function Cusp_GalQ_orbits_dict(curve,cusps)
     //Input: curve - the modular curve X_1(N) as returned by the function X_1
@@ -153,8 +164,8 @@ function DegreeTypesCuspidal_up_to_Degree(degree,cusps)
     return &cat[DegreeTypesCuspidal_of_Degree(d,cusps) : d in [1..degree]];
 end function;
 
-function NonCuspidalPlaces(degree,cusps,curve)
-    return [p : p in Places(curve,degree) | p notin cusps];
+function NonCuspidalPlaces(degree,curve)
+    return [p : p in Places(curve,degree) | not IsCusp(p)];
 end function;
 
 function CuspidalPlaces(degree,cusps)
@@ -165,7 +176,7 @@ function NonCuspidalDivisorsOfDegreeType(degree_type,cusps,curve)
     divisors_old:={DivisorGroup(curve) ! 0};
     divisors_new:=divisors_old;
     for d in degree_type do;
-        divisors_new:={D1+D2 : D1 in divisors_old, D2 in NonCuspidalPlaces(d,cusps,curve)};
+        divisors_new:={D1+D2 : D1 in divisors_old, D2 in NonCuspidalPlaces(d,curve)};
         divisors_old:=divisors_new;
     end for;
     return divisors_new;
@@ -232,7 +243,7 @@ function Main2(N : d:=0, write_results_to_file := false);
     if write_results_to_file then;
         PrintFile("data/cusp_signatures_" cat IntegerToString(N), cusp_signatures : Overwrite:=true);
     end if;
-    non_cusps_by_degree := [NonCuspidalPlaces(d,cusp_orbits,X1modp) : d in [1..gon-1]];
+    non_cusps_by_degree := [NonCuspidalPlaces(d,X1modp) : d in [1..gon-1]];
     non_cusps := &cat non_cusps_by_degree;
     //print "non_cusps", #non_cusps;
     if #non_cusps eq 0 then;
