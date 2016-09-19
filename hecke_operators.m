@@ -155,13 +155,39 @@ function Tp_pdp_1_noncuspidal(D,p);
 end function;
 
 
-function PositieveRankHeckePolynomial(S,n);
+function PositiveRankHeckePolynomial(S,n);
 //Returns the characteristic polynomial of the hecke operator n on the subspace
 //of the cuspidal modular symbol spaces S corresponding to the part where the LRatio is 0
-//Under BSD this is exactly the part corresponding to the part of S where the corresponding ablian variety has positive rank
- return &*[HeckePolynomial(Si,n) : Si in NewformDecomposition(S) | LRatio(Si,1) eq 0];
+//Under BSD this is exactly the part corresponding to the part of S where the corresponding abelian variety has positive rank
+ return &*[HeckePolynomial(Si,n) : Si in NewformDecomposition(S) | LRatio(AssociatedNewSpace(Si),1) eq 0];
 end function;
- 
+
+
+
+function PositiveRankHeckePolynomialX1N(N,n,chars);
+//The input space needs to be cuspidal of sign 0
+//Returns the characteristic polynomial of the hecke operator n on the subspace
+//of the cuspidal modular symbol spaces S corresponding to the part where the LRatio is 0
+//with respect to at least one of the characters in chars
+//Under BSD this is exactly the part corresponding to the part of S where the corresponding abelian variety when twisted by one of the characters has positive rank
+
+  D := FullDirichletGroup(N);
+  chars := [D ! chi : chi in chars];
+  ann_pol := 1;
+  for d in Elements(D) do;
+    M := ModularSymbols(d,2,0);
+    S := CuspidalSubspace(M);
+    for Si in NewformDecomposition(S) do;
+      Snew := AssociatedNewSpace(Si);
+      rank_0 := &or[Dimension(Snew)/2 ne Dimension(TwistedWindingSubmodule(Snew,1,chi)) : chi in chars];
+      if rank_0 then;
+        ann_pol := ann_pol*Sqrt(HeckePolynomial(Si,n));
+      end if;
+    end for;
+  end for;
+  return ann_pol;
+end function;
+
 
 
 
