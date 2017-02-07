@@ -222,6 +222,14 @@ function FilterCandidates(curve,cusp_signatures,candidates)
     return survivors;
 end function;
 
+function cuspidal_class_group_modp(N,p);
+    X1modp := X_1(N,GF(p));
+    Grp,m1,m2 := ClassGroup(X1modp);
+    cusps := Cusps_X1(X1modp);
+    cusp_orbits := Cusp_GalQ_orbits(X1modp,cusps);
+    return sub<Grp |[ m2(c) : c in cusp_orbits]>;
+end function;
+
 function Main2(N : d:=0, write_results_to_file := false);
     p:=2;
     for i in PrimesInInterval(2,20) do;
