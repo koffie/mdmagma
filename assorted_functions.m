@@ -222,7 +222,7 @@ function FilterCandidates(curve,cusp_signatures,candidates)
     return survivors;
 end function;
 
-function cuspidal_class_group_modp(N,p);
+function CuspidalClassgroupModp(N,p);
     X1modp := X_1(N,GF(p));
     Grp,m1,m2 := ClassGroup(X1modp);
     cusps := Cusps_X1(X1modp);
