@@ -1,6 +1,7 @@
 Attach("X1_N_equations.m");
 import "X1_N_equations.m": equations, gonality_upperbound;
-
+Attach("X_1_n.m");
+import "X_1_n.m": X_1_n;
 
 function FunctionDegrees(divisor)
 //{On input a divisor returns a list containing the degrees of all the non constant 
