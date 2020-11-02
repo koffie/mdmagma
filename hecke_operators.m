@@ -1,17 +1,4 @@
-Attach("assorted_functions.m");
-import "assorted_functions.m": Functions_xyrsbcF2F3;
-
-function EllipticCurveFromX1Place(P);
-//Returns the associated elliptic curve corresponding to a place on X1N
-//the elliptic curve is guaranteed to be in tate normal form, so that 
-//0,0 is the point of order N. The point 0,0 is returned as optional second element
-    X1N := Curve(P);
-    x,y,r,s,b,c,F2,F3:=Functions_xyrsbcF2F3(X1N);
-    bP:=Evaluate(b,P);
-    cP:=Evaluate(c,P);
-    E:=EllipticCurve([1-cP,-bP,-bP,0,0]);
-    return E, E ! [0,0];
-end function;
+load "X_1_n.m";
 
 function pIsogeniesFiniteField1(E,p);
 //Returns the p+1 elliptic curves that are p-isogenous to an initial E

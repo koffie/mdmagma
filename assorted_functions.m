@@ -1,7 +1,8 @@
+load "hecke_operators.m";
 Attach("X1_N_equations.m");
 import "X1_N_equations.m": equations, gonality_upperbound;
-Attach("X_1_n.m");
-import "X_1_n.m": X_1_n;
+
+
 
 function FunctionDegrees(divisor)
 //{On input a divisor returns a list containing the degrees of all the non constant 
@@ -46,20 +47,7 @@ function X_1(N,base_ring)
     return ProjectiveClosure(C);
 end function;
 
-function Functions_xyrsbcF2F3(curve)
-    //Input: curve - the modular curve X_1(N) as returned by the function X_1
-    //Output: x,y,r,s,b,c,F2,F3 - The modular units as in http://arxiv.org/pdf/1307.5719v1.pdf
-    FF := FunctionField(curve);
-    x := FF.1;
-    y := FF.2;
-    r := (x^2*y-x*y+y-1)/x/(x*y-1);
-    s := (x*y-y+1)/x/y;
-    b := r*s*(r-1);
-    c := s*(r-1);
-    F3 := b;
-    F2 := b/(16*b^2+(1-20*c-8*c^2)*b + c*(c-1)^3);
-    return x,y,r,s,b,c,F2,F3;
-end function;
+
 
 function Cusp_GalQ_orbit_to_signature(cusp);
     //Input: cusp - a Place of X_1(N) that is a cusp
