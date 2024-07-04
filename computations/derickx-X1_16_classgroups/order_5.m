@@ -7,6 +7,19 @@ C := HyperellipticCurve(f);
 
 FF<x,y> := FunctionField(C);
 p1,p2 := Explode(Zeros(x-1)); p1,p2;
+
+CC := RegularModel(C,2);
+IntersectionMatrix(CC);
+ComponentGroup(CC);
+P1_CC := PointOnRegularModel(CC, RepresentativePoint(p1));
+P2_CC := PointOnRegularModel(CC, RepresentativePoint(p2));
+
+//the following show that the two rational cusps p1,p2 lie on the same component
+P1_CC`component_indices;
+P2_CC`component_indices;
+
+
+
 tf, h := IsPrincipal(5*(p1-p2));
 
 // h is 0 mod 2 and 3 so we need to divide by 6
