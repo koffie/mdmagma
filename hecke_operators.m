@@ -138,6 +138,9 @@ end function;
 
 function Tp_pdp_1_noncuspidal(D,p);
   P,e := Support(D);
+  if #P eq 0 then;
+    return D;
+  end if;
   return &+[e[i]*Tp_pdp_1_noncuspidal_place(P[i],p) : i in [1..#P]]; 
 end function;
 
