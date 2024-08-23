@@ -47,7 +47,7 @@ end function;
 
 
 
-function StrangeInfo(N : lowerbound := 2^42, tries := 10, new := false, proof := true)
+function StrangeInfo(N : lowerbound := 2^25, tries := 10, new := false, proof := true)
     zeta, r := SuitableRootOfUnity(N : lowerbound := lowerbound);
     potentially_strange_characters := [];
     for label in ConreyCharacterOrbitReps(N) do
@@ -87,7 +87,7 @@ function AsListOfStrings(l)
   return [Quote(x) : x in l];
 end function;
 
-function PrintStrangeInfoRange(a, b : lowerbound := 2^42, tries := 10, new := false, proof := true)
+function PrintStrangeInfoRange(a, b : lowerbound := 2^25, tries := 10, new := false, proof := true)
   print "{";
   separator := ",";
   for N in [a..b] do
