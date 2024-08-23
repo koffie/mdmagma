@@ -1,0 +1,1 @@
+seq 1 100 100000 | parallel --joblog output/strange_joblog.txt -j 10 'magma -b start:={1} stop:=$(({1}+99)) strange_characters.m > output/strange/$(printf "%06d" {1})_$(printf "%06d" $(({1}+99))).json'
