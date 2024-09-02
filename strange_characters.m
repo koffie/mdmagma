@@ -102,7 +102,11 @@ end function;
 if assigned start and assigned stop then
   start := StringToInteger(start);
   stop := StringToInteger(stop);
-  if not assigned new then new := false; end if;
+  if not assigned new then
+    new := false;
+  else
+    new := new eq "true";
+  end if;
   PrintStrangeInfoRange(start, stop : new := new);
   exit;
 end if;
