@@ -15,6 +15,22 @@ The code in this project has been used for the following research papers:
 
 [Torsion subgroups of elliptic curves over quintic and sextic number fields](http://arxiv.org/abs/1608.07549)
 
+# Testing
+
+To run the tests for this repository execute
+
+```shell
+cd tests
+magma v2/modular_curves/test_all.m
+```
+
+# Version 2
+
+A version 2 that is more consistent and organized is under development. 
+V2 will use intrinsics, user defined types and have automated tests.
+This is currently done in the v2 subfolder.
+
+
 # Copyright
 
     copyright (C) 2024 Maarten Derickx, Andrew Sutherland
