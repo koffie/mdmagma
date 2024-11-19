@@ -6,7 +6,7 @@ declare attributes MDCrvMod1: level, curve, base_ring, N;
 
 intrinsic Print(X::MDCrvMod1)
 {Print X}
-   printf "The modular curve X_1(%o) over %o", X`N, X`base_ring;
+   printf "The modular curve X_1(%o) over %o", X`N, "<basering not implemented>"; // todo BaseRing(X`curve);
 end intrinsic;
 
 intrinsic MDX1(N::RngIntElt, base_ring::Rng) -> MDCrvMod1
@@ -19,5 +19,6 @@ end intrinsic;
 intrinsic _InitMDCrvMod1(X::MDCrvMod1, N::RngIntElt, base_ring::Rng)
 {Initialize an MDCrvMod1 object}
     X`N := N;
-    _InitMDCrvMod(X, N,  base_ring);
+    // todo curve := _equation_X(.....);
+    // _InitMDCrvMod(X, N,  curve);
 end intrinsic;
