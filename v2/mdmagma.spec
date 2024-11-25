@@ -1,4 +1,8 @@
 {
+  function_fields
+  {
+    places.m
+  }
   modular_curves
   {
     base_curve.m
