@@ -37,10 +37,42 @@ end intrinsic;
 
 intrinsic EllipticCurve(X::MDCrvMod, x::PlcCrvElt) -> CrvEll
 { Return the elliptic curve corresponding to the place x on X }
-    Ex := EllipticCurve([Evaluate(f, x) : f in X`_E]);
-    return Ex;
+    E := EllipticCurve([Evaluate(f, x) : f in X`_E]);
+    return E;
 end intrinsic;
 
+intrinsic HeckeOperator(X::MDCrvMod, p::RngIntElt, x::PlcCrvElt) -> DivCrvElt
+{ Return the result of applying the hecke operator T_p on x as a divisor on X }
+    ZZ := Integers();
+    d := Degree(x);
+    E := EllipticCurve(X, x);
+    L := LevelStructure(X, x);
+    isogenies := MDIsogenies(E,p);
+    tp := [<Codomain(phi),ApplyIsogeny(X, phi, L)> : phi in isogenies];
+    tp := Multiset([ModuliPoint(X, EL[1], EL[2]): EL in tp]);
+    Tpx := &+[ (ZZ ! (Multiplicity(tp,x)*d/Degree(x)))*x : x in MultisetToSet(tp)];
+    return Tpx;
+end intrinsic;
 
+intrinsic HeckeOperator(X::MDCrvMod, p::RngIntElt, D::DivCrvElt) -> DivCrvElt
+{ Return the result of applying the hecke operator T_p on D as a divisor on X }
+    a,b := Support(D);
+    TpD := [b[i]*HeckeOperator(X, p, a[i]) : i in [1..#a]];
+    return &+TpD;
+end intrinsic;
+
+intrinsic DiamondOperator(X::MDCrvMod, d::RngIntElt, x::PlcCrvElt) -> PlcCrvElt
+{ Return the result of applying the diamond operator <d> on x as a place on X }
+    E := EllipticCurve(X, x);
+    L := LevelStructure(X, x);
+    return ModuliPoint(X, E, DiamondOperator(X, d, L));
+end intrinsic;
+
+intrinsic DiamondOperator(X::MDCrvMod, d::RngIntElt, D::DivCrvElt) -> DivCrvElt
+{ Return the result of applying the diamond operator <d> on D as a divisor on X }
+    a,b := Support(D);
+    dD := [b[i]*DiamondOperator(X, d, a[i]) : i in [1..#a]];
+    return &+dD;
+end intrinsic;
 
 

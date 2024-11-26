@@ -52,7 +52,24 @@ intrinsic ModuliPoint(X::MDCrvMod11, E::CrvEll, levelstructure::Rec) -> PlcCrvEl
 }
     assert X`M eq 2;
     bc := DerickxNormalForm_bc(E, levelstructure`P, levelstructure`Q);
-    return Place(X`_coordinates,bc);
+    return MDPlace(X`_coordinates,bc);
+end intrinsic;
+
+intrinsic ApplyIsogeny(X::MDCrvMod11, phi:: MapSch[CrvEll, CrvEll], levelstructure::Rec) -> Rec
+{   Return the level structure corresponding to phi(levelstructure)
+}
+    return rec<
+        X11LevelStructure | P := phi(levelstructure`P), Q := phi(levelstructure`Q)
+    >;
+end intrinsic;
+
+intrinsic DiamondOperator(X::MDCrvMod11, d::RngIntElt, levelstructure::Rec) -> Rec
+{   Return the level structure corresponding to d*P, d*Q;
+}
+    assert GCD(d, Level(X)) eq 1;
+    return rec<
+        X11LevelStructure | P := d*levelstructure`P, Q := d*levelstructure`Q
+    >;
 end intrinsic;
 
 intrinsic DerickxNormalForm_bc(E::CrvEll, P::PtEll, Q::PtEll) -> Seq
@@ -132,7 +149,6 @@ intrinsic _equation_X11(m,n,base_ring : equation_directory:="../models_X1_m_n", 
     n_str := IntegerToString(n);
     m_str := IntegerToString(m);
     file_name := equation_directory cat "/X1_" cat m_str cat "_" cat n_str cat ".txt";
-    print GetCurrentDirectory();
     data := Read(file_name);
     data := Split(data);
     //example contents of the file X1_2_10.txt

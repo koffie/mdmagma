@@ -1,6 +1,6 @@
 procedure test_TwoGenerators(x, y, n)
     // n should be the degree of the field extension F(x,y)/F
-    f,g := TwoGenerators(x,y);
+    f,g := MDTwoGenerators(x,y);
     // f and g should vanish at x and y
     TSTAssertEQ(Evaluate(f,[x,y]), 0);
     TSTAssertEQ(Evaluate(g,[x,y]), 0);
@@ -13,7 +13,7 @@ procedure test_TwoGenerators(x, y, n)
 end procedure;
 
 procedure test_Place(coordinates,values,P)
-  P1 := Place(coordinates,values);
+  P1 := MDPlace(coordinates,values);
   TSTAssertEQ(P1,P);
   for i in [1,2] do
     TSTAssertEQ(

@@ -27,7 +27,52 @@ procedure test_ModuliPoint()
    x := Places(Curve(X), 4)[2];
    E := EllipticCurve(X,x);
    PQ := LevelStructure(X, x);
-   TSTAssertEQ(ModuliPoint(X, E, PQ),x);
+   TSTAssertEQ(ModuliPoint(X, E, PQ), x);
+end procedure;
+
+procedure test_ApplyIsogeny()
+   x := Places(Curve(X), 4)[3];
+   E := EllipticCurve(X,x);
+   PQ := LevelStructure(X, x);
+   phi := MDIsogenies(E,7)[1];
+   phi_t:=  DualIsogeny(phi);
+   PQ1 := ApplyIsogeny(X, phi, PQ);
+   PQ2 := ApplyIsogeny(X, phi_t, PQ1);
+   E1 := Codomain(phi_t);
+   // applying phi and then phi_t should
+   // be multiplication by deg phi = 7.
+   TSTAssertEQ(E1 ! (7*PQ`P), PQ2`P);
+   TSTAssertEQ(E1 ! (7*PQ`Q), PQ2`Q);
+end procedure;
+
+procedure test_HeckeOperatorPlcCrvElt()
+   X := MDX11(2, 14, GF(5));
+   x := Places(Curve(X), 2)[18];
+   TpX := HeckeOperator(X, 3, x);
+   TSTAssertEQ(Degree(TpX), 8);
+end procedure;
+
+procedure test_HeckeOperatorDivCrvElt()
+   X := MDX11(2, 14, GF(5));
+   x := &+Places(Curve(X), 2)[17..18];
+   TpX := HeckeOperator(X, 3, x);
+   TSTAssertEQ(Degree(TpX), 16);
+end procedure;
+
+procedure test_DiamondOperatorPlcCrvElt()
+   X := MDX11(2, 14, GF(5));
+   x := Places(Curve(X), 2)[18];
+   dx := DiamondOperator(X, 3, x);
+   ddx := DiamondOperator(X, 5, dx);
+   TSTAssertEQ(x, ddx);
+end procedure;
+
+procedure test_DiamondOperatorDivCrvElt()
+   X := MDX11(2, 14, GF(5));
+   x := &+Places(Curve(X), 2)[17..18];
+   dx := DiamondOperator(X, 3, x);
+   ddx := DiamondOperator(X, 5, dx);
+   TSTAssertEQ(x, ddx);
 end procedure;
 
 test_Print();
@@ -35,3 +80,8 @@ test_Level();
 test_Genus();
 test_LevelStructure();
 test_ModuliPoint();
+test_ApplyIsogeny();
+test_HeckeOperatorPlcCrvElt();
+test_HeckeOperatorDivCrvElt();
+test_DiamondOperatorPlcCrvElt();
+test_DiamondOperatorDivCrvElt();
