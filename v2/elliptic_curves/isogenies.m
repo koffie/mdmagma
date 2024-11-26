@@ -1,6 +1,7 @@
-function MDIsogenies(E,p)
-//Returns the p+1 elliptic curves that are p-isogenous to an initial E
-//curve defined over a finite field
+intrinsic MDIsogenies(E::CrvEll, p::RngIntElt) -> SeqEnum[MapSch]
+{ Returns the p+1 elliptic curves that are p-isogenous to an initial E
+  curve defined over a finite field
+}
     assert IsPrime(p);
     //assert p ne 2;
     Fq := BaseRing(E);
@@ -23,4 +24,4 @@ function MDIsogenies(E,p)
         Append(~isogenies,phi);
     end for;
     return isogenies;
-end function;
+end intrinsic;
