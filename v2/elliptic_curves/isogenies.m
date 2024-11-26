@@ -1,4 +1,4 @@
-intrinsic MDIsogenies(E::CrvEll, p::RngIntElt) -> SeqEnum[MapSch]
+intrinsic MDIsogenies(E::CrvEll[FldFin], p::RngIntElt) -> SeqEnum[MapSch]
 { Returns the p+1 elliptic curves that are p-isogenous to an initial E
   curve defined over a finite field
 }
