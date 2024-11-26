@@ -1,4 +1,8 @@
 {
+  elliptic_curves
+  {
+    isogenies.m
+  }
   function_fields
   {
     places.m
