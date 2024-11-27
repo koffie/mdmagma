@@ -9,7 +9,10 @@ end intrinsic;
 
 intrinsic _InitMDCrvMod(X::MDCrvMod, level::RngIntElt, curve::CrvPln, _E)
 {Initialize an MDCrvMod object}
-   assert GCD(level,Characteristic(BaseRing(curve))) eq 1;
+   char := Characteristic(BaseRing(curve));
+   if char gt 0 then
+     assert GCD(level, char) eq 1;
+   end if;
    X`level := level;
    X`curve := curve;
    X`_E := _E;
@@ -40,6 +43,18 @@ intrinsic EllipticCurve(X::MDCrvMod, x::PlcCrvElt) -> CrvEll
     E := EllipticCurve([Evaluate(f, x) : f in X`_E]);
     return E;
 end intrinsic;
+
+intrinsic  jInvariantMap(X::MDCrvMod) -> CrvEll
+{ Return the jInvariant map to X(1) }
+    E := EllipticCurve(X`_E);
+    return jInvariant(E);
+end intrinsic;
+
+intrinsic  DiscriminantMap(X::MDCrvMod) -> CrvEll
+{ Return the discriminant of the universal elliptic curve over X }
+    E := EllipticCurve(X`_E);
+    return Discriminant(E);
+end intrinsic
 
 intrinsic IsCusp(X::MDCrvMod, x::PlcCrvElt) -> BoolElt
 { Returns whether the place x on X  is a cusp}
