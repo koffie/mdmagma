@@ -41,6 +41,22 @@ intrinsic EllipticCurve(X::MDCrvMod, x::PlcCrvElt) -> CrvEll
     return E;
 end intrinsic;
 
+intrinsic IsCusp(X::MDCrvMod, x::PlcCrvElt) -> BoolElt
+{ Returns whether the place x on X  is a cusp}
+    try
+      E := EllipticCurve(X,x);
+    catch e;
+      return true;
+    end try;
+    return false;
+end intrinsic;
+
+
+intrinsic NoncuspidalPlaces(X::MDCrvMod, d::RngIntElt) -> SeqEnum[PlcCrvElt]
+{ Return the cuspidal places of degree d on X}
+    return [x : x in Places(Curve(X), d) | not IsCusp(X, x)];
+end intrinsic;
+
 intrinsic HeckeOperator(X::MDCrvMod, p::RngIntElt, x::PlcCrvElt) -> DivCrvElt
 { Return the result of applying the hecke operator T_p on x as a divisor on X }
     ZZ := Integers();
