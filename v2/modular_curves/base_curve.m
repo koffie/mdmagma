@@ -66,7 +66,6 @@ intrinsic IsCusp(X::MDCrvMod, x::PlcCrvElt) -> BoolElt
     return false;
 end intrinsic;
 
-
 intrinsic NoncuspidalPlaces(X::MDCrvMod, d::RngIntElt) -> SeqEnum[PlcCrvElt]
 { Return the cuspidal places of degree d on X}
     return [x : x in Places(Curve(X), d) | not IsCusp(X, x)];

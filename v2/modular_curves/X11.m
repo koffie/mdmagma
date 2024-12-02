@@ -12,7 +12,7 @@ intrinsic Print(X::MDCrvMod11)
    printf "The modular curve X_1(%o, %o) over %o", M, N, base_ring;
 end intrinsic;
 
-intrinsic MDX11(N::RngIntElt, M::RngIntElt, base_ring::Rng: equation_directory:="../models_X1_m_n", zeta_M:=0) -> MDCrvMod11
+intrinsic MDX11(N::RngIntElt, M::RngIntElt, base_ring::Rng: equation_directory:="", zeta_M:=0) -> MDCrvMod11
 { Create the modular curve X_1(N, M) }
   assert M mod N eq 0;
   X := New(MDCrvMod11);
@@ -21,7 +21,7 @@ intrinsic MDX11(N::RngIntElt, M::RngIntElt, base_ring::Rng: equation_directory:=
 end intrinsic;
 
 intrinsic _InitMDCrvMod11(X::MDCrvMod11, M::RngIntElt, N::RngIntElt,
-    base_ring::Rng: equation_directory:="../models_X1_m_n", zeta_M:=0)
+    base_ring::Rng: equation_directory:="", zeta_M:=0)
 {Initialize an MDCrvMod1 object}
     X`M := M;
     X`N := N;
@@ -124,7 +124,7 @@ intrinsic DerickxNormalForm_bc(E::CrvEll, P::PtEll, Q::PtEll) -> Seq
     return [b,c];
 end intrinsic;
 
-intrinsic _equation_X11(m,n,base_ring : equation_directory:="../models_X1_m_n", zeta_m:=0) -> CrvPln
+intrinsic _equation_X11(m,n,base_ring : equation_directory:="", zeta_m:=0) -> CrvPln
 {  Input: m,n - integers such that m divides n
           base_ring - a ring
           equation_directory - directory with files X1_m_n.txt containing models
@@ -132,6 +132,9 @@ intrinsic _equation_X11(m,n,base_ring : equation_directory:="../models_X1_m_n", 
     Output: C - a curve
     Returns an algebraic model C of the modular curve X_1(m,n) as a curve over base_ring
 }
+    if equation_directory eq "" then
+      equation_directory := MDMagmaSourceDir() cat "/../models_X1_m_n";
+    end if;
     assert IsDivisibleBy(n,m);
     if m gt 2 then
         if zeta_m ne 0 then

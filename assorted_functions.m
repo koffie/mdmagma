@@ -67,7 +67,7 @@ function Cusps_X1(curve)
 end function;
 
 function IsCusp(P);
-//Given a point on X_1(N) returns wether this point is a cusp
+//Given a point on X_1(N) returns whether this point is a cusp
     X1N := Curve(P);
     x,y,r,s,b,c,F2,F3:=Functions_xyrsbcF2F3(X1N);
     if Valuation(b,P) lt 0 or Valuation(c,P) lt 0 then;

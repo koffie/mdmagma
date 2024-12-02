@@ -1,17 +1,10 @@
 {
-  elliptic_curves
+  ..
   {
-    isogenies.m
+    Magma
+    {
+      +magma.spec
+    }
   }
-  function_fields
-  {
-    places.m
-  }
-  modular_curves
-  {
-    base_curve.m
-    X1.m
-    X11.m
-  }
-  utils.m
+  +mdmagma_internal.spec
 }

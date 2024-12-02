@@ -37,8 +37,21 @@ And then from withing magma run
 AttachSpec("mdmagma.spec");
 ```
 
-Using it from other folders is also possible but not advised, since this means you need
-manually
+### Dependencies
+
+mdmagma depends on https://github.com/AndrewVSutherland/Magma .
+Note that `AttachSpec("mdmagma.spec");` also makes sure that all external dependencies
+are attached. If you want to attach the files from mdmagma without also attaching the
+dependencies then you need to attach `mdmagma_internal.spec` instead. This is usefull if
+you already have the dependencies of mdmagma attached by default or if you are using 
+[CHIMP](https://github.com/edgarcosta/CHIMP/). There is no guarantee that mdmagma will
+work with dependencies other than those listed by running:
+
+```bash
+git submodule
+```
+
+
 
 
 ## Testing
