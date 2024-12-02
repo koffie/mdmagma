@@ -12,11 +12,11 @@ intrinsic Print(X::MDCrvMod11)
    printf "The modular curve X_1(%o, %o) over %o", M, N, base_ring;
 end intrinsic;
 
-intrinsic MDX11(N::RngIntElt, M::RngIntElt, base_ring::Rng) -> MDCrvMod11
+intrinsic MDX11(N::RngIntElt, M::RngIntElt, base_ring::Rng: equation_directory:="../models_X1_m_n", zeta_M:=0) -> MDCrvMod11
 { Create the modular curve X_1(N, M) }
   assert M mod N eq 0;
   X := New(MDCrvMod11);
-  _InitMDCrvMod11(X, N, M, base_ring);
+  _InitMDCrvMod11(X, N, M, base_ring: equation_directory:=equation_directory, zeta_M:=zeta_M);
   return X;
 end intrinsic;
 
