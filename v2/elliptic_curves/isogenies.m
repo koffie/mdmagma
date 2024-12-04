@@ -8,6 +8,8 @@ intrinsic MDIsogenies(E::CrvEll[FldFin], p::RngIntElt) -> SeqEnum[MapSch]
     fp := DivisionPolynomial(E,p);
     Fqn := SplittingField(fp);
     Fq2n := RandomExtension(Fqn, 2);
+    // this following line is to prevent a bug, see test_IsogeniesBugFix()
+    xi := Roots(ChangeRing(fp,Fqn));
     xi := Roots(ChangeRing(fp,Fq2n));
     Eq2n := BaseChange(E,Fq2n);
     fE := DefiningEquation(Eq2n);

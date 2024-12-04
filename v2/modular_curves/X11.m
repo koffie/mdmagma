@@ -1,6 +1,6 @@
 //Code for the modular curve X_1(M,N)
 declare type MDCrvMod11: MDCrvMod;
-declare attributes MDCrvMod11: level, curve, base_ring, N, M, _E,_P,_Q,_coordinates;
+declare attributes MDCrvMod11: level, curve, base_ring, N, M, _E, _P, _Q, _coordinates;
 
 X11LevelStructure := recformat< P : PtEll, Q : PtEll >;
 
