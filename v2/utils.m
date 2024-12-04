@@ -14,3 +14,27 @@ intrinsic MDMagmaSourceDir() -> MonStgElt
   source_dir := "/" cat Join(s[1..(#s - 1)], "/") where s := Split(filenames[1,1],"/");
   return source_dir;
 end intrinsic;
+
+intrinsic MDMultiset(S::Setq) -> SetMulti
+{The multiset derived from S}
+    if IsNull(S) then
+        return {* *};
+    end if;
+    MS := {* Universe(S) | *};
+    // the reason for this is that magma sometimes screws up hashing
+    // so we need to explicitly compare
+    for x in S do
+      added := false;
+      for y in MS do
+        if x eq y then;
+          Include(~MS, y);
+          added := true;
+          break;
+        end if;
+      end for;
+      if not added then;
+         Include(~MS, x);
+      end if;
+    end for;
+    return MS;
+end intrinsic;

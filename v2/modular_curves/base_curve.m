@@ -79,7 +79,10 @@ intrinsic HeckeOperator(X::MDCrvMod, p::RngIntElt, x::PlcCrvElt) -> DivCrvElt
     L := LevelStructure(X, x);
     isogenies := MDIsogenies(E,p);
     tp := [<Codomain(phi),ApplyIsogeny(X, phi, L)> : phi in isogenies];
-    tp := Multiset([ModuliPoint(X, EL[1], EL[2]): EL in tp]);
+    // the below doesn't work since magma has a bug where equal elements are not
+    // identified in the multiset below.
+    // tp := Multiset([ModuliPoint(X, EL[1], EL[2]): EL in tp]);
+    tp := MDMultiset([ModuliPoint(X, EL[1], EL[2]): EL in tp]);
     Tpx := &+[ (ZZ ! (Multiplicity(tp,x)*d/Degree(x)))*x : x in MultisetToSet(tp)];
     return Tpx;
 end intrinsic;
