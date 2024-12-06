@@ -16,9 +16,8 @@ intrinsic HeckeSieve(X::MDCrvMod, Y::MDCrvMod, q::RngIntElt, S::SeqEnum) -> SeqE
   sieved := [];
   for D in S do
     D1 := DegeneracyMap(X, Y, D);
-    time A_qD := HeckeOperator(Y,q,D1)-q*DiamondOperator(Y,q,D1)-D1;
+    A_qD := HeckeOperator(Y,q,D1)-q*DiamondOperator(Y,q,D1)-D1;
     if IsPrincipal(A_qD) then
-     print Index(S,D);
      Append(~sieved, D);
     end if;
   end for;
