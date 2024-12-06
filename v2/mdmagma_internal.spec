@@ -10,6 +10,7 @@
   modular_curves
   {
     base_curve.m
+    rational_points.m
     X1.m
     X11.m
   }

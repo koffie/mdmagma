@@ -73,6 +73,10 @@ end intrinsic;
 
 intrinsic HeckeOperator(X::MDCrvMod, p::RngIntElt, x::PlcCrvElt) -> DivCrvElt
 { Return the result of applying the hecke operator T_p on x as a divisor on X }
+    char := Characteristic(BaseRing(X));
+    if char gt 0 then
+      assert GCD(char, p) eq 1;
+    end if;
     ZZ := Integers();
     d := Degree(x);
     E := EllipticCurve(X, x);
@@ -92,6 +96,20 @@ intrinsic HeckeOperator(X::MDCrvMod, p::RngIntElt, D::DivCrvElt) -> DivCrvElt
     a,b := Support(D);
     TpD := [b[i]*HeckeOperator(X, p, a[i]) : i in [1..#a]];
     return &+TpD;
+end intrinsic;
+
+intrinsic DiamondOperator(X::MDCrvMod, d::RngIntElt, x::PlcCrvElt) -> PlcCrvElt
+{ Return the result of applying the diamond operator <d> on x as a place on X }
+    E := EllipticCurve(X, x);
+    L := LevelStructure(X, x);
+    return ModuliPoint(X, E, DiamondOperator(X, d, L));
+end intrinsic;
+
+intrinsic DiamondOperator(X::MDCrvMod, d::RngIntElt, D::DivCrvElt) -> DivCrvElt
+{ Return the result of applying the diamond operator <d> on D as a divisor on X }
+    a,b := Support(D);
+    dD := [b[i]*DiamondOperator(X, d, a[i]) : i in [1..#a]];
+    return &+dD;
 end intrinsic;
 
 intrinsic DiamondOperator(X::MDCrvMod, d::RngIntElt, x::PlcCrvElt) -> PlcCrvElt

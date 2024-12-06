@@ -95,10 +95,42 @@ intrinsic ApplyIsogeny(X::MDCrvMod1, phi:: MapSch[CrvEll, CrvEll], levelstructur
 end intrinsic;
 
 intrinsic DiamondOperator(X::MDCrvMod1, d::RngIntElt, levelstructure::Rec) -> Rec
-{   Return the level structure corresponding to d*P;
+{   Return the level structure corresponding to d*P; where d is coprime to the level
 }
-    assert GCD(d, Level(X)) eq 1;
+    require GCD(d, Level(X)) eq 1: "d should be coprime to the level";
     return rec<X1LevelStructure | P := d*levelstructure`P>;
+end intrinsic;
+
+
+intrinsic DegeneracyMap(X::MDCrvMod1, d::RngIntElt, levelstructure::Rec) -> Rec
+{   Return the level structure corresponding to d*P; where d is a divisor of the level
+}
+    assert (Level(X) mod d) eq 0;
+    return rec<X1LevelStructure | P := d*levelstructure`P>;
+end intrinsic;
+
+
+intrinsic DegeneracyMap(X::MDCrvMod1, Y::MDCrvMod1, x::PlcCrvElt) -> PlcCrvElt
+{ If the place x corresponds to (E,P) the place y corresponding to (E,P*Level(X)/Level(Y))
+  taking into account multiplicities. I.e. if deg(y) = deg(x) it returns y, if not
+  y deg(x)/deg(y) is returned.}
+    M := Level(X);
+    N := Level(Y);
+    require M mod N eq 0: "the level of Y should divide the level of X";
+    E := EllipticCurve(X, x);
+    L := LevelStructure(X, x);
+    y := ModuliPoint(Y, E, DegeneracyMap(X, M div N, L));
+    assert Degree(x) mod Degree(y) eq 0;
+    return (Degree(x) div Degree(y))*y;
+end intrinsic;
+
+
+intrinsic DegeneracyMap(X::MDCrvMod1, Y::MDCrvMod1, D::DivCrvElt) -> DivCrvElt
+{ Return the result of applying the degeneracy map on the level of divisors on X, see
+  the documentation where D is a PlcCrvElt for more details.}
+    a,b := Support(D);
+    dD := [b[i]*DegeneracyMap(X, Y, a[i]) : i in [1..#a]];
+    return &+dD;
 end intrinsic;
 
 
