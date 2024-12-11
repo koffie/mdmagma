@@ -1,6 +1,7 @@
 
 declare type MDCrvMod1: MDCrvMod;
-declare attributes MDCrvMod1:level, curve, base_ring, N, _E, _P, _coordinates;
+declare attributes MDCrvMod1:level, curve, base_ring, N, _E, _P,
+    _coordinates, _coordinates_xy, _coordinates_F2F3, _cusp_data;
 
 X1LevelStructure := recformat< P : PtEll>;
 
@@ -23,11 +24,13 @@ intrinsic _InitMDCrvMod1(X::MDCrvMod1, N::RngIntElt,
     base_ring::Rng: equation_directory:="")
 {Initialize an MDCrvMod1 object}
     X`N := N;
-    curve, E, P, coordinates := _equation_X1(
+    curve, E, P, coordinates, coordinates_xy, coordinates_F2F3 := _equation_X1(
         N,base_ring : equation_directory:=equation_directory
     );
     X`_P := P;
     X`_coordinates := coordinates;
+    X`_coordinates_xy := coordinates_xy;
+    X`_coordinates_F2F3 := coordinates_F2F3;
     _InitMDCrvMod(X, N,  curve, E);
 end intrinsic;
 
@@ -162,5 +165,63 @@ intrinsic _equation_X1(n,base_ring : equation_directory:="") -> CrvPln
     E := [1-c, -b, -b, FF ! 0, FF ! 0];
     P := [FF ! 0, FF ! 0];
     coordinates := [b, c];
-    return ProjectiveClosure(C), E, P, coordinates;
+    coordinates_xy := [x, y];
+    coordinates_F2F3 :=  [b/(16*b^2+(1-20*c-8*c^2)*b + c*(c-1)^3),b];
+    return ProjectiveClosure(C), E, P, coordinates, coordinates_xy, coordinates_F2F3;
+end intrinsic;
+
+intrinsic CongruenceSubgroup(X::MDCrvMod1) -> GrpPSL2
+{ The subgroup of PSL2 corresponding to this modular curve }
+    return Gamma1(Level(X));
+end intrinsic;
+
+intrinsic Cusps(X::MDCrvMod1) -> SeqEnum[PlcCrvElt]
+{ The cusps on this modular curve }
+    cusps := Support(Divisor(DiscriminantMap(X)));
+    nr_cusps := #Cusps(CongruenceSubgroup(X));
+    xy := X`_coordinates_xy;
+    cusps := Seqset(cusps cat Poles(xy[1]) cat Poles(xy[2]));
+    assert &+[Degree(c) : c in cusps] eq nr_cusps;
+    return Setseq(cusps);
+end intrinsic;
+
+intrinsic CuspSignature(X::MDCrvMod1, C::PlcCrvElt) -> SeqEnum[RngIntElt]
+{ Returns the valuation of F2 and F3 at the place C }
+    require IsCusp(X, C) : "C should be a cusp!";
+    return [Valuation(f, C) : f in X`_coordinates_F2F3];
+end intrinsic;
+
+intrinsic _InitialiseCuspData(X::MDCrvMod1)
+{ Compute the signatures of all cusps }
+    if assigned X`_cusp_data then
+        return;
+    end if;
+    cusp_data := AssociativeArray();
+    for c in Cusps(X) do
+        signature :=  CuspSignature(X,c);
+        if IsDefined(cusp_data, signature) then
+            Append(~cusp_data[signature], c);
+        else
+            cusp_data[signature] := [c];
+        end if;
+    end for;
+    X`_cusp_data := cusp_data;
+end intrinsic;
+
+intrinsic _CuspData(X::MDCrvMod1) -> Assoc
+{ Return the associative array mapping cusp signatures to cusps }
+    _InitialiseCuspData(X);
+    return X`_cusp_data;
+end intrinsic;
+
+intrinsic CuspsWithSignature(X::MDCrvMod1, signature::SeqEnum[RngIntElt]) -> SeqEnum[PlcCrvElt]
+{ Returns the cusps of the given signature }
+    _InitialiseCuspData(X);
+    return X`_cusp_data[signature];
+end intrinsic;
+
+intrinsic IsCuspSignatureUnique(X::MDCrvMod1) -> BoolElt
+{ Returns true if and only if there is only one galois orbit of cusps per cusp signature }
+    _InitialiseCuspData(X);
+    return &and[#c eq 1 : c in MDValues(_CuspData(X))];
 end intrinsic;

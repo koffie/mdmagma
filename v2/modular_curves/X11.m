@@ -193,3 +193,9 @@ intrinsic _equation_X11(m,n,base_ring : equation_directory:="", zeta_m:=0) -> Cr
 
     return ProjectiveClosure(C), E, P1, Q1, coordinates;
 end intrinsic;
+
+intrinsic Cusps(X::MDCrvMod11) -> SeqEnum[PlcCrvElt]
+{ The cusps on this modular curve }
+    cusps := Poles(jInvariantMap(X));
+    return cusps;
+end intrinsic;

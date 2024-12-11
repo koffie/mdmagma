@@ -31,7 +31,15 @@ procedure test_MDMultiset()
   TSTAssertEQ({Multiplicity(S,x) : x in S}, {1});
 end procedure;
 
+procedure test_MDValues()
+    A := AssociativeArray();
+    A["a"] := 1;
+    A["b"] := 2;
+    TSTAssertEQ(Sort(MDValues(A)), [1, 2]);
+end procedure;
+
 //test_AttributeAsString_assigned();
 test_AttributeAsString_unassigned();
 test_MDMagmaSourceDir();
 test_MDMultiset();
+test_MDValues();

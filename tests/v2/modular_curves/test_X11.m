@@ -75,6 +75,12 @@ procedure test_DiamondOperatorDivCrvElt()
    TSTAssertEQ(x, ddx);
 end procedure;
 
+procedure test_Cusps()
+   X := MDX11(2, 20, GF(7));
+   cusp_degrees := Sort([Degree(c) : c in Cusps(X)]);
+   TSTAssertEQ(cusp_degrees,  [ 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 4, 4, 4, 4 ]);
+end procedure;
+
 test_Print();
 test_Level();
 test_Genus();
@@ -85,3 +91,4 @@ test_HeckeOperatorPlcCrvElt();
 test_HeckeOperatorDivCrvElt();
 test_DiamondOperatorPlcCrvElt();
 test_DiamondOperatorDivCrvElt();
+test_Cusps();

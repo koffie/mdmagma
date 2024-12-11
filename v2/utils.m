@@ -7,6 +7,13 @@ intrinsic MDAttributeAsString(S, name::MonStgElt, level::MonStgElt) -> MonStgElt
   return "<unassigned>";
 end intrinsic;
 
+
+intrinsic MDValues(A::Assoc) -> SeqEnum
+{ Return the values of the associative array }
+    return [A[key] : key in Keys(A)];
+end intrinsic;
+
+
 intrinsic MDMagmaSourceDir() -> MonStgElt
 { Returns the source directory where mdmagma is installed }
   filenames := GetFilenames(MDAttributeAsString);

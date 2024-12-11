@@ -50,6 +50,44 @@ procedure test_DiamondOperatorPlcCrvElt()
    TSTAssertEQ(x, ddx);
 end procedure;
 
+procedure test_CongruenceSubgroup()
+   TSTAssertEQ(CongruenceSubgroup(X), Gamma1(21));
+end procedure;
+
+procedure test_Cusps()
+   cusp_degrees := Sort([Degree(c) : c in Cusps(X)]);
+   TSTAssertEQ(cusp_degrees, [ 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 6 ]);
+end procedure;
+
+procedure test_CuspSignature()
+   cusp_signatures := Sort([CuspSignature(X, c) : c in Cusps(X)]);
+   expected_signatures := [
+       [ -17, 1 ],
+       [ -13, 2 ],
+       [ -5, 4 ],
+       [ -3, 1 ],
+       [ -1, 0 ],
+       [ -1, 5 ],
+       [ 1, 1 ],
+       [ 1, 1 ],
+       [ 1, 2 ],
+       [ 5, -3 ],
+       [ 11, -1 ],
+       [ 19, -17 ]
+   ];
+   TSTAssertEQ(cusp_signatures, expected_signatures);
+end procedure;
+
+procedure test_CuspsWithSignature()
+   cusps := CuspsWithSignature(X, [1,1]);
+   TSTAssertEQ(#cusps, 2);
+end procedure;
+
+procedure test_IsCuspSignatureUnique()
+   assert IsCuspSignatureUnique(MDX1(13, Rationals()));
+   assert not IsCuspSignatureUnique(MDX1(13, GF(5)));
+end procedure;
+
 
 test_print();
 test_Level();
@@ -70,3 +108,8 @@ test_HeckeOperatorPlcCrvElt();
 test_HeckeOperatorDivCrvElt();
 test_DiamondOperatorDivCrvElt();
 */
+test_CongruenceSubgroup();
+test_Cusps();
+test_CuspSignature();
+test_CuspsWithSignature();
+test_IsCuspSignatureUnique();
