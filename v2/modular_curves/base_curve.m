@@ -50,6 +50,12 @@ intrinsic  jInvariantMap(X::MDCrvMod) -> CrvEll
     return jInvariant(E);
 end intrinsic;
 
+intrinsic  jInvariant(X::MDCrvMod, x::PlcCrvElt) -> FldElt
+{ Return the jInvariant of the elliptic curve corresponding to E }
+    E := EllipticCurve(X, x);
+    return jInvariant(E);
+end intrinsic;
+
 intrinsic  DiscriminantMap(X::MDCrvMod) -> CrvEll
 { Return the discriminant of the universal elliptic curve over X }
     E := EllipticCurve(X`_E);
@@ -67,7 +73,7 @@ intrinsic IsCusp(X::MDCrvMod, x::PlcCrvElt) -> BoolElt
 end intrinsic;
 
 intrinsic NoncuspidalPlaces(X::MDCrvMod, d::RngIntElt) -> SeqEnum[PlcCrvElt]
-{ Return the cuspidal places of degree d on X}
+{ Return the noncuspidal places of degree d on X}
     return [x : x in Places(Curve(X), d) | not IsCusp(X, x)];
 end intrinsic;
 
@@ -119,10 +125,61 @@ intrinsic DiamondOperator(X::MDCrvMod, d::RngIntElt, x::PlcCrvElt) -> PlcCrvElt
     return ModuliPoint(X, E, DiamondOperator(X, d, L));
 end intrinsic;
 
+intrinsic DiamondOrbit(X::MDCrvMod, x::PlcCrvElt) -> SeqEnum[PlcCrvElt]
+{ Return the orbit of x under the diamond operators }
+    E := EllipticCurve(X, x);
+    L := LevelStructure(X, x);
+    N := Level(X);
+    diamonds := [i : i in [1..(N div 2)] | GCD(i,N) eq 1];
+    return [ModuliPoint(X, E, DiamondOperator(X, d, L)) : d in diamonds];
+end intrinsic;
+
 intrinsic DiamondOperator(X::MDCrvMod, d::RngIntElt, D::DivCrvElt) -> DivCrvElt
 { Return the result of applying the diamond operator <d> on D as a divisor on X }
     a,b := Support(D);
     dD := [b[i]*DiamondOperator(X, d, a[i]) : i in [1..#a]];
+    return &+dD;
+end intrinsic;
+
+intrinsic PlacesUpToDiamond(X::MDCrvMod, S::SeqEnum[PlcCrvElt]) -> SeqEnum[PlcCrvElt]
+{ Return one representative of each orbit in S under the action of the diamond operators }
+    representatives := [];
+    orbits := AssociativeArray();
+    // the orbits are grouped by minimap polynomial of the j-invariant to speed up
+    // everything
+    N := Level(X);
+    diamonds := [i : i in [1..(N div 2)] | GCD(i,N) eq 1];
+    for P in S do
+        already_added := false;
+        jP := MinimalPolynomial(jInvariant(X,P));
+        if IsDefined(orbits, jP) then
+            if P in orbits[jP] then
+                already_added := true;
+            end if;
+        end if;
+        if not already_added then
+            Append(~representatives, P);
+            orbit := DiamondOrbit(X, P);
+            if IsDefined(orbits, jP) then
+                orbits[jP] :=  orbits[jP] cat orbit;
+            else
+                orbits[jP] :=  orbit;
+            end if;
+        end if;
+    end for;
+    return representatives;
+end intrinsic;
+
+intrinsic NoncuspidalPlacesUpToDiamond(X::MDCrvMod, d::RngIntElt) -> SeqEnum[PlcCrvElt]
+{ Return the noncuspidal places of degree d on X up to the action of the diamond operators}
+     return PlacesUpToDiamond(X, NoncuspidalPlaces(X,d));
+end intrinsic;
+
+intrinsic DegeneracyMap(X::MDCrvMod, Y::MDCrvMod, D::DivCrvElt) -> DivCrvElt
+{ Return the result of applying the degeneracy map on the level of divisors on X, see
+  the documentation where D is a PlcCrvElt for more details.}
+    a,b := Support(D);
+    dD := [b[i]*DegeneracyMap(X, Y, a[i]) : i in [1..#a]];
     return &+dD;
 end intrinsic;
 

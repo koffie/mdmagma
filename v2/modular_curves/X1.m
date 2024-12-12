@@ -127,16 +127,6 @@ intrinsic DegeneracyMap(X::MDCrvMod1, Y::MDCrvMod1, x::PlcCrvElt) -> PlcCrvElt
     return (Degree(x) div Degree(y))*y;
 end intrinsic;
 
-
-intrinsic DegeneracyMap(X::MDCrvMod1, Y::MDCrvMod1, D::DivCrvElt) -> DivCrvElt
-{ Return the result of applying the degeneracy map on the level of divisors on X, see
-  the documentation where D is a PlcCrvElt for more details.}
-    a,b := Support(D);
-    dD := [b[i]*DegeneracyMap(X, Y, a[i]) : i in [1..#a]];
-    return &+dD;
-end intrinsic;
-
-
 intrinsic _equation_X1(n,base_ring : equation_directory:="") -> CrvPln
 {  Input: n - an integer
           base_ring - a ring
