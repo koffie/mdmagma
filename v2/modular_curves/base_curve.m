@@ -148,10 +148,11 @@ intrinsic PlacesUpToDiamond(X::MDCrvMod, S::SeqEnum[PlcCrvElt]) -> SeqEnum[PlcCr
     // the orbits are grouped by minimap polynomial of the j-invariant to speed up
     // everything
     N := Level(X);
+    F := PrimeField(BaseRing(X));
     diamonds := [i : i in [1..(N div 2)] | GCD(i,N) eq 1];
     for P in S do
         already_added := false;
-        jP := MinimalPolynomial(jInvariant(X,P));
+        jP := MinimalPolynomial(jInvariant(X,P),F);
         if IsDefined(orbits, jP) then
             if P in orbits[jP] then
                 already_added := true;
