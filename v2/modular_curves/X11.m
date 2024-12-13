@@ -72,8 +72,8 @@ intrinsic DiamondOperator(X::MDCrvMod11, d::RngIntElt, levelstructure::Rec) -> R
     >;
 end intrinsic;
 
-intrinsic DegeneracyMap(X::MDCrvMod11, Y::MDCrvMod1, x::PlcCrvElt) -> PlcCrvElt
-{ If the place x corresponds to (E,P,Q) the place y corresponding to (E,Q*Level(X)/Level(Y))
+intrinsic DegeneracyMap(X::MDCrvMod11, Y::MDCrvMod1, x::PlcCrvElt : i:=0 ) -> PlcCrvElt
+{ If the place x corresponds to (E,P,Q) the place y corresponding to (E,(i*P+Q)*Level(X)/Level(Y))
   taking into account multiplicities. I.e. if deg(y) = deg(x) it returns y, if not
   y deg(x)/deg(y) is returned.}
     M := Level(X);
@@ -81,7 +81,7 @@ intrinsic DegeneracyMap(X::MDCrvMod11, Y::MDCrvMod1, x::PlcCrvElt) -> PlcCrvElt
     require M mod N eq 0: "the level of Y should divide the level of X";
     E := EllipticCurve(X, x);
     L := LevelStructure(X, x);
-    L1 := rec<X11LevelStructure | P := (M div N)*L`Q>;
+    L1 := rec<X11LevelStructure | P := (M div N)*(i*L`P+L`Q)>;
     y := ModuliPoint(Y, E, L1);
     assert Degree(x) mod Degree(y) eq 0;
     return (Degree(x) div Degree(y))*y;
