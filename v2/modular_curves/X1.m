@@ -1,7 +1,7 @@
 
 declare type MDCrvMod1: MDCrvMod;
 declare attributes MDCrvMod1:level, curve, base_ring, N, _E, _P,
-    _coordinates, _coordinates_xy, _coordinates_F2F3, _cusp_data;
+    _coordinates, _coordinates_xy, _coordinates_F2F3, _cusp_data, _classgroup;
 
 X1LevelStructure := recformat< P : PtEll>;
 
@@ -181,8 +181,27 @@ intrinsic CuspSignature(X::MDCrvMod1, C::PlcCrvElt) -> SeqEnum[RngIntElt]
     return [Valuation(f, C) : f in X`_coordinates_F2F3];
 end intrinsic;
 
+intrinsic CuspOrbitCountQ(X::MDCrvMod1) -> RngIntElt
+{ Returns the number of Galois orbits of cusps of X_1(n) using 2.8(1) of
+https://arxiv.org/pdf/2007.13929 . }
+    n := Level(X);
+	orbits:=0;
+	divs:=Divisors(n);
+	for d in divs do
+		if d eq 1 or d eq 2 then
+		   orbits:=orbits+1;
+        end if;
+		if d gt 2 then
+		   orbits:=orbits+(EulerPhi(d) div 2);
+		end if;
+	end for;
+	return orbits;
+end intrinsic;
+
 intrinsic _InitialiseCuspData(X::MDCrvMod1)
-{ Compute the signatures of all cusps }
+{ Compute the signatures of all cusps, and create a lookup table to get the cusps
+corresponding to a signature. It raises an error if the signature doesn't uniquely
+determine the galois orbit over Q. }
     if assigned X`_cusp_data then
         return;
     end if;
@@ -195,6 +214,7 @@ intrinsic _InitialiseCuspData(X::MDCrvMod1)
             cusp_data[signature] := [c];
         end if;
     end for;
+    assert #cusp_data eq CuspOrbitCountQ(X);
     X`_cusp_data := cusp_data;
 end intrinsic;
 
@@ -212,6 +232,14 @@ end intrinsic;
 
 intrinsic IsCuspSignatureUnique(X::MDCrvMod1) -> BoolElt
 { Returns true if and only if there is only one galois orbit of cusps per cusp signature }
-    _InitialiseCuspData(X);
     return &and[#c eq 1 : c in MDValues(_CuspData(X))];
+end intrinsic;
+
+intrinsic CuspOrbitsQ(X::MDCrvMod1) -> SeqEnum[DivCrvElt]
+{ The galois orbits over Q of cusps on this modular curve as divisors. Note that when
+  the modular curve is defined over a finite field of positive characteristic one still
+  has an action of the galois group over Q.
+}
+    orbits := [&+c : c in MDValues(_CuspData(X))];
+    return orbits;
 end intrinsic;

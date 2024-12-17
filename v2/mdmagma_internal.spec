@@ -1,4 +1,8 @@
 {
+  curves
+  {
+    classgroups.m
+  }
   elliptic_curves
   {
     isogenies.m
