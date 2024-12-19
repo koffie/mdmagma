@@ -268,7 +268,7 @@ function Main2(N : d:=0, write_results_to_file := false);
                 end if;
             end for;
         end for;
-	if write_results_to_file then;
+    if write_results_to_file then;
             PrintFile("data/candidates_" cat IntegerToString(N) cat "_" cat IntegerToString(degree), candidates[degree] : Overwrite:=true);
         end if;
     end for;

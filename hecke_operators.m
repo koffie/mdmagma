@@ -53,7 +53,7 @@ function TateNormalForm_bc(E,P);
     x0:=P[1];
     y0:=P[2];
 
-    a1,a2,a3,a4,a6:=Explode(aInvariants(E));	
+    a1,a2,a3,a4,a6:=Explode(aInvariants(E));
     aa1:=a1;
     aa3:=2*y0+a3+a1*x0;
     aa2:=3*x0+a2;

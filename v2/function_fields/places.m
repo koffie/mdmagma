@@ -16,7 +16,7 @@ intrinsic MDTwoGenerators(x::FldFinElt,y::FldFinElt) -> RngMPolElt, RngMPolElt
   for i in [0..Degree(g)] do
     ai:=Eltseq(Coefficient(g,i));
     ai := &+ [ai[j]*u^(j-1) : j in [1..#ai]];
-	g1:=g1+ai*v^i;
+    g1:=g1+ai*v^i;
   end for;
   return f1,g1;
 end intrinsic;

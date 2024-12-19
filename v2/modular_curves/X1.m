@@ -185,17 +185,17 @@ intrinsic CuspOrbitCountQ(X::MDCrvMod1) -> RngIntElt
 { Returns the number of Galois orbits of cusps of X_1(n) using 2.8(1) of
 https://arxiv.org/pdf/2007.13929 . }
     n := Level(X);
-	orbits:=0;
-	divs:=Divisors(n);
-	for d in divs do
-		if d eq 1 or d eq 2 then
-		   orbits:=orbits+1;
+    orbits:=0;
+    divs:=Divisors(n);
+    for d in divs do
+        if d eq 1 or d eq 2 then
+           orbits:=orbits+1;
         end if;
-		if d gt 2 then
-		   orbits:=orbits+(EulerPhi(d) div 2);
-		end if;
-	end for;
-	return orbits;
+        if d gt 2 then
+           orbits:=orbits+(EulerPhi(d) div 2);
+        end if;
+    end for;
+    return orbits;
 end intrinsic;
 
 intrinsic _InitialiseCuspData(X::MDCrvMod1)

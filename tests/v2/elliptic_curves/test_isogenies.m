@@ -1,27 +1,27 @@
 procedure test_Isogenies()
-	q := 5;
-	F := GF(11);
-	E := EllipticCurve([F ! 1, F ! 3]);
-	j := jInvariant(E);
-	isogenies := MDIsogenies(E, q);
-	TSTAssertEQ(#isogenies, q+1);
-	for phi in isogenies do
-		TSTAssertEQ(jInvariant(Domain(phi)), j);
-		TSTAssertEQ(Degree(phi), q);
-	end for;
-	jset := {jInvariant(Codomain(isogenies[i])) : i in [1..#isogenies]};
-	TSTAssertEQ(#jset,q+1); //this might fail some times if one changes E or p
-	// this is expected, this means there is "some CM".
+    q := 5;
+    F := GF(11);
+    E := EllipticCurve([F ! 1, F ! 3]);
+    j := jInvariant(E);
+    isogenies := MDIsogenies(E, q);
+    TSTAssertEQ(#isogenies, q+1);
+    for phi in isogenies do
+        TSTAssertEQ(jInvariant(Domain(phi)), j);
+        TSTAssertEQ(Degree(phi), q);
+    end for;
+    jset := {jInvariant(Codomain(isogenies[i])) : i in [1..#isogenies]};
+    TSTAssertEQ(#jset,q+1); //this might fail some times if one changes E or p
+    // this is expected, this means there is "some CM".
 end procedure;
 
 procedure test_IsogeniesBugFix()
     // the following fails in magma V2.28-14, V2.28-15
     // and possibly some older versions as well.
-	F := GF(2^4);
-	// print F, MinimalPolynomial(F.1);
-	R<x> := PolynomialRing(F);
-	fp := x^12 + F.1^2*x^9 + F.1^3*x^8 + F.1^4*x^6 + F.1^6*x^4 + F.1^6*x^3 + F.1^7*x^2 + F.1^8*x + F.1^12;
-	Fqn := SplittingField(fp);
+    F := GF(2^4);
+    // print F, MinimalPolynomial(F.1);
+    R<x> := PolynomialRing(F);
+    fp := x^12 + F.1^2*x^9 + F.1^3*x^8 + F.1^4*x^6 + F.1^6*x^4 + F.1^6*x^3 + F.1^7*x^2 + F.1^8*x + F.1^12;
+    Fqn := SplittingField(fp);
     Fq2n := RandomExtension(Fqn, 2);
     // uncommenting the line below will make the error go away
     xi := Roots(ChangeRing(fp,Fqn));
