@@ -160,8 +160,8 @@ intrinsic _equation_X11(m,n,base_ring : equation_directory:="", zeta_m:=0) -> Cr
             try
                 zeta_m := RootOfUnity(m,base_ring);
             catch e
-                printf "Specified base ring %o does not contain a %oth root of unity", base_ring, m;
-                assert false;
+                message := Sprintf("The base ring: %o does not contain a primitive %oth root of unity", base_ring, m);
+                require false: message;
             end try;
         end if;
         z:=zeta_m; i:=zeta_m;
@@ -200,6 +200,8 @@ intrinsic _equation_X11(m,n,base_ring : equation_directory:="", zeta_m:=0) -> Cr
         P := [b, b];
         Q := [0, 0];
         coordinates := [FFX ! b, FFX ! c];
+    else
+        coordinates := [FFX ! q, FFX ! t];
     end if;
 
 
