@@ -60,7 +60,7 @@ To run the tests for this repository execute. At the momemnt it is only possible
 
 ```shell
 cd tests
-magma v2/modular_curves/test_all.m
+magma -n v2/test_all.m
 ```
 
 # Copyright

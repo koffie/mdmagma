@@ -1,6 +1,6 @@
 
 declare type MDCrvMod1: MDCrvMod;
-declare attributes MDCrvMod1:level, curve, base_ring, N, _E, _P,
+declare attributes MDCrvMod1:level, curve, N, _E, _P,
     _coordinates, _coordinates_xy, _coordinates_F2F3, _cusp_data, _classgroup;
 
 X1LevelStructure := recformat< P : PtEll>;
@@ -14,7 +14,7 @@ end intrinsic;
 
 intrinsic MDX1(N::RngIntElt, base_ring::Rng) -> MDCrvMod1
 { Create the modular curve X_1(N) }
-  assert N ge 10; // X_1(N) is only implemented for N >= 10
+  require N ge 10: "X_1(N) is only implemented for N >= 10";
   X := New(MDCrvMod1);
   _InitMDCrvMod1(X, N, base_ring);
   return X;

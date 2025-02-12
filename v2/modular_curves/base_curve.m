@@ -13,9 +13,14 @@ intrinsic _InitMDCrvMod(X::MDCrvMod, level::RngIntElt, curve::CrvPln, _E)
    if char gt 0 then
      assert GCD(level, char) eq 1;
    end if;
-   X`level := level;
+   _InitMDCrvMod(X, level);
    X`curve := curve;
    X`_E := _E;
+end intrinsic;
+
+intrinsic _InitMDCrvMod(X::MDCrvMod, level::RngIntElt)
+{Initialize an MDCrvMod object}
+   X`level := level;
 end intrinsic;
 
 intrinsic Level(X::MDCrvMod) -> RngIntElt
