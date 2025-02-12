@@ -32,3 +32,4 @@ procedure test_MDDiagonalALBasis()
 end procedure;
 
 test_MDCongruenceSubgroup();
+test_MDDiagonalALBasis();
