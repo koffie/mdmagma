@@ -1,4 +1,4 @@
-load "elliptic_curve_chabauty.m";
+load "../../elliptic_curve_chabauty.m";
 
 _<x>:=PolynomialRing(Integers());
 f16 := x*(x^2+1)*(x^2+2*x-1);
@@ -256,4 +256,4 @@ assert IsPrincipal(I1);
 assert IsPrincipal(I2);
 print "Claim 14 successfully verified";
 
-
+exit;
