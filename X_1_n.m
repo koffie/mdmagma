@@ -115,7 +115,7 @@ function EllipticCurvesWithPointOverFieldUpToFrobeniusAndDiamond(p,i,N)
   assert IsSquarefree(N);
   F := GF(p,i);
   ECs := [E: E in EllipticCurvesOverFieldUpToFrobenius(F) | (#E(F) mod N) eq 0];
-  ECs_with_point := [];
+  ECs_with_point := [* *];
   for E in ECs do
     gens := [P*(Order(P) div N) : P in Generators(E(F)) | (Order(P) mod N) eq 0];
     assert #gens eq 1;
