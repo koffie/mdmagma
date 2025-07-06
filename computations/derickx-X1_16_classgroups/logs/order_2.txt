@@ -1,0 +1,130 @@
+Magma V2.28-3     Mon Jul  7 2025 01:15:00 on euler    [Seed = 2610480895]
+Type ? for help.  Type <Ctrl>-D to quit.
+
+Loading file "order_2.m"
+Claim 1 succesfully verified!
+Claim 2 succesfully verified!
+Claim 3: (u:y:v)-coordinates of the torsion points
+[ (1 : -1 : 0), (0 : 1 : 1), (1 : 1 : 0), (0 : -1 : 1) ]
+[ (-1 : -2 : 1), (-1 : 2 : 1), (1 : 2 : 1), (1 : -2 : 1) ]
+Claim 4 succesfully verified!
+Claim 5 succesfully verified!
+Claim 6 succesfully verified!
+Claim 7: (u:y:v)-coordinates of the torsion points
+[ (1 : -1 : 0), (1 : 1 : 0) ]
+[ (1 : -1 : 0), (1 : 1 : 0) ]
+Claim 8 succesfully verified!
+Claim 9: Expressing r^2+2*r*s-s^2 in terms of v
+v^8 + 8*v^7 - 20*v^6 - 8*v^5 - 26*v^4 - 8*v^3 - 20*v^2 + 8*v + 1
+Claim 10: equation for genus 2 quotient curve
+Hyperelliptic Curve defined by y^2 = -x^5 - 4*x^4 + 6*x^3 + 4*x^2 - x over 
+Rational Field
+Claim 11 successfully verified!
+Claim 12: the points on D10
+{ (1 : -2 : 1), (1 : 2 : 1), (0 : 0 : 1), (1 : 0 : 0) }
+Claim 13: the points on C9
+<(1 : 0 : 0), [
+    <Place at (-1 : $.1 : 1), 2>
+]>
+<(0 : 0 : 1), [
+    <Place at (1 : $.1 : 1), 2>
+]>
+<(1 : -2 : 1), [
+    <Place at (0 : -1 : 1), 1>,
+    <Place at (1 : 1 : 0), 1>
+]>
+<(1 : 2 : 1), [
+    <Place at (0 : 1 : 1), 1>,
+    <Place at (1 : -1 : 0), 1>
+]>
+Claim 14: the points on C10
+<(1 : -2 : 1), [
+    <Place at ($.1 : 4*$.1 : 1), 2>
+]>
+<(1 : 2 : 1), [
+    <Place at ($.1 : -4*$.1 : 1), 2>
+]>
+<(0 : 0 : 1), [
+    <Place at (-1 : 8 : 1), 1>,
+    <Place at (-1 : -8 : 1), 1>
+]>
+<(1 : 0 : 0), [
+    <Place at (1 : 8 : 1), 1>,
+    <Place at (1 : -8 : 1), 1>
+]>
+Claim 15 A) expanding in terms of v:
+v^8 - 8*v^6 - 24*v^4 + 32*v^2 + 16
+Claim 15 B) expanding in terms of v:
+16*v^8 - 32*v^6 - 24*v^4 + 8*v^2 + 1
+Claim 16: equation for genus 2 quotient curve
+Hyperelliptic Curve defined by y^2 = 2*x^5 - 8*x^4 - 12*x^3 + 8*x^2 + 2*x over 
+Rational Field
+Claim 17 successfully verified!
+Claim 18: the points on D12
+{@ (0 : 0 : 1), (1 : 0 : 0) @}
+Claim 19: the points on C11
+<(1 : 0 : 0), [
+    <Place at (0 : 4 : 1), 1>,
+    <Place at (0 : -4 : 1), 1>
+]>
+<(0 : 0 : 1), [
+    <Place at (1 : 1 : 0), 1>,
+    <Place at (1 : -1 : 0), 1>
+]>
+Claim 20: the points on C12
+<(1 : 0 : 0), [
+    <Place at (0 : $.1 : 1), 2>
+]>
+<(0 : 0 : 1), [
+    <Place at (1 : $.1 : 0), 2>
+]>
+Claim 21 expanding in terms of v:
+v^8 - 8*v^7 - 12*v^6 + 56*v^5 - 122*v^4 + 136*v^3 - 76*v^2 + 72*v - 31
+Claim 22: equation for genus 2 quotient curve
+Hyperelliptic Curve defined by y^2 = x^6 - 6*x^5 + x^4 + 20*x^3 - x^2 - 6*x - 1 
+over Rational Field
+Claim 23 successfully verified!
+Claim 24: the points on D16
+{ (1 : -1 : 0), (1 : 1 : 0) }
+Claim 25: the points on C15
+<(0 : -1 : 1), [
+    <Place at (1 : -4 : 1), 1>,
+    <Place at (1 : 1 : 0), 1>
+]>
+<(0 : 1 : 1), [
+    <Place at (1 : 4 : 1), 1>,
+    <Place at (1 : -1 : 0), 1>
+]>
+Claim 26: the points on C16
+<(1 : -1 : 0), [
+    <Place at ($.1 : -8 : 1), 2>
+]>
+<(1 : 1 : 0), [
+    <Place at ($.1 : 8 : 1), 2>
+]>
+Claim 27 expanding in terms of v:
+-17*v^8 - 104*v^7 - 132*v^6 - 72*v^5 - 22*v^4 + 40*v^3 + 28*v^2 + 8*v - 1
+Claim 28: equation for genus 2 quotient curve
+Hyperelliptic Curve defined by y^2 = x^6 - 2*x^5 - 15*x^4 - 4*x^3 + 15*x^2 - 2*x
+    - 1 over Rational Field
+Claim 29 successfully verified!
+Claim 30: the points on D18
+{ (1 : -1 : 0), (1 : 1 : 0) }
+Claim 31: the points on C17
+<(0 : -1 : 1), [
+    <Place at ($.1 : 8 : 1), 2>
+]>
+<(0 : 1 : 1), [
+    <Place at ($.1 : -8 : 1), 2>
+]>
+Claim 32: the points on C18
+<(1 : -1 : 0), [
+    <Place at (0 : -1 : 1), 1>,
+    <Place at (-1 : 4 : 1), 1>
+]>
+<(1 : 1 : 0), [
+    <Place at (0 : 1 : 1), 1>,
+    <Place at (-1 : -4 : 1), 1>
+]>
+
+Total time: 5.240 seconds, Total memory usage: 229.16MB

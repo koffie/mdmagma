@@ -1,0 +1,3 @@
+Seq	Host	Starttime	JobRuntime	Send	Receive	Exitval	Signal	Command
+1	:	1751843700.231	     5.279	0	0	0	0	magma -n order_2.m >| logs/order_2.txt
+2	:	1751843700.237	   261.434	0	0	0	0	magma -n order_5.m >| logs/order_5.txt
